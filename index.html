@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Card Explorer</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="panel hero">
+        <div class="hero-text">
+          <p class="eyebrow">API Homework · Pokédex Lab</p>
+          <h1>Pokémon Card Explorer</h1>
+          <p class="hero-copy">
+            Grab a Pokémon from the PokéAPI, poke through the data, and turn it into a card straight out of a booster pack.
+          </p>
+        </div>
+        <span class="api-badge"><span class="api-dot" aria-hidden="true"></span>PokéAPI</span>
+      </header>
+
+      <section class="panel search-panel" aria-labelledby="search-heading">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Live search</p>
+            <h2 id="search-heading">Find a Pokémon</h2>
+          </div>
+          <code class="endpoint">GET /api/v2/pokemon/{name}</code>
+        </div>
+
+        <form id="search-form" class="search-row" novalidate>
+          <div class="input-wrap">
+            <input
+              id="search-input"
+              name="pokemon"
+              type="text"
+              placeholder="pikachu"
+              aria-label="Pokémon name"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
+            <button id="clear-button" class="clear-button" type="button" aria-label="Clear search" hidden>
+              ✕
+            </button>
+          </div>
+          <button id="search-button" class="search-button" type="submit">Search ↗</button>
+        </form>
+
+        <div class="quick-search">
+          <span class="quick-label">Quick search:</span>
+          <button class="chip" type="button" data-pokemon="pikachu">Pikachu</button>
+          <button class="chip" type="button" data-pokemon="charizard">Charizard</button>
+          <button class="chip" type="button" data-pokemon="bulbasaur">Bulbasaur</button>
+          <button class="chip" type="button" data-pokemon="mewtwo">Mewtwo</button>
+        </div>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <section id="result" class="result"></section>
+
+      <footer class="footer">
+        <span>Built for API Masterclass homework</span>
+        <a href="https://pokeapi.co/docs/v2" target="_blank" rel="noopener">Read the PokéAPI docs ↗</a>
+      </footer>
+    </main>
+
+    <template id="card-template">
+      <article class="card">
+        <header class="card-head">
+          <span class="card-kicker"><span class="card-kicker-type"></span> type · Pokédex entry</span>
+          <span class="card-number"></span>
+        </header>
+
+        <div class="card-body">
+          <div class="card-title">
+            <p class="card-type-label"></p>
+            <h2 class="card-name"></h2>
+            <div class="card-badges"></div>
+          </div>
+          <div class="card-art-wrap">
+            <img class="card-art" alt="" />
+          </div>
+        </div>
+
+        <dl class="facts">
+          <div class="fact">
+            <dt>Height</dt>
+            <dd class="fact-height"></dd>
+          </div>
+          <div class="fact">
+            <dt>Weight</dt>
+            <dd class="fact-weight"></dd>
+          </div>
+          <div class="fact">
+            <dt>Abilities</dt>
+            <dd class="fact-abilities"></dd>
+          </div>
+        </dl>
+
+        <section class="stats">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Battle profile</p>
+              <h3>Base stats</h3>
+            </div>
+            <span class="stats-source">Source: API response</span>
+          </div>
+          <ul class="stats-list"></ul>
+        </section>
+      </article>
+    </template>
+
+    <template id="stat-template">
+      <li class="stat">
+        <span class="stat-name"></span>
+        <span class="stat-track"><span class="stat-fill"></span></span>
+        <span class="stat-value"></span>
+      </li>
+    </template>
+
+    <template id="empty-template">
+      <div class="placeholder">
+        <span class="placeholder-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3l1.9 5.4L19.5 10l-5.6 1.6L12 17l-1.9-5.4L4.5 10l5.6-1.6L12 3z" />
+          </svg>
+        </span>
+        <h3>Your next discovery is waiting</h3>
+        <p>Search for a Pokémon to see its artwork, type, measurements, abilities, and base stats.</p>
+      </div>
+    </template>
+
+    <template id="error-template">
+      <div class="placeholder placeholder-error">
+        <span class="placeholder-icon" aria-hidden="true">!</span>
+        <h3>Search failed</h3>
+        <p class="error-message"></p>
+      </div>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
